@@ -1,11 +1,11 @@
 package com.github.maikoncarlos.tarefas.entities;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -21,10 +21,10 @@ public class Tarefa implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotNull(message = "campo não pode ser nulo")
     private String descricao;
 
-    @NotNull()
+    @NotNull(message = "campo não pode ser nulo")
     private String status;
 
 

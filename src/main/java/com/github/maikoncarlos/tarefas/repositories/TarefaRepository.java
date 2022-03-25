@@ -1,4 +1,4 @@
-package com.github.maikoncarlos.tarefas.entities.repositories;
+package com.github.maikoncarlos.tarefas.repositories;
 
 import com.github.maikoncarlos.tarefas.entities.Tarefa;
 import org.springframework.data.jpa.repository.JpaRepository;
