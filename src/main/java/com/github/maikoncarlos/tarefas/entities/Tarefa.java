@@ -1,5 +1,6 @@
 package com.github.maikoncarlos.tarefas.entities;
 
+import com.github.maikoncarlos.tarefas.enuns.TarefaStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,15 @@ public class Tarefa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull(message = "campo não pode ser nulo")
     private String descricao;
 
-    @NotNull(message = "campo não pode ser nulo")
-    private String status;
+    @NotNull
+    @Convert(converter = TarefaStatusEnum.Mapeador.class)
+    private TarefaStatusEnum tarefaStatus;
 
 
 }
