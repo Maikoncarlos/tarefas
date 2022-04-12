@@ -1,19 +1,16 @@
 package com.github.maikoncarlos.tarefas.enuns;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-
 public enum TarefaStatusEnum {
 
-    PENDENTE("P"),
-    EM_ANDAMENTO("E"),
-    CANCELADO("C"),
-    FINALIZADO("F");
-
+    PENDENTE("P", "pendente"),
+    EM_ANDAMENTO("E", "em_andamento"),
+    CANCELADO("C", "cancelado"),
+    FINALIZADO("F", "finalizado");
 
     private String status;
+    private String description;
 
-    TarefaStatusEnum(String status) {
+    TarefaStatusEnum(String status, String description) {
         this.status = status;
     }
 
@@ -21,18 +18,17 @@ public enum TarefaStatusEnum {
         return this.status;
     }
 
-    @Converter(autoApply = true)
-    public static class Mapeador implements AttributeConverter<TarefaStatusEnum, String> {
-
-        @Override
-        public String convertToDatabaseColumn(TarefaStatusEnum status) {
-            return status.getStatus();
-        }
-
-        @Override
-        public TarefaStatusEnum convertToEntityAttribute(String dbData) {
-            return null;
-        }
-
+    public String getDescription() {
+        return description;
     }
+
+    public static TarefaStatusEnum toEnum(String status){
+        for(TarefaStatusEnum tar : TarefaStatusEnum.values()){
+            if (status.equals(tar.getStatus())){
+                return tar;
+            }
+        }
+        throw new IllegalArgumentException("status inválido");
+    }
+
 }
