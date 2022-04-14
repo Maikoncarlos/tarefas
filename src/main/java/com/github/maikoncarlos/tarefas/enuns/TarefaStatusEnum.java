@@ -1,34 +1,27 @@
 package com.github.maikoncarlos.tarefas.enuns;
 
+import lombok.Getter;
+
 public enum TarefaStatusEnum {
 
-    PENDENTE("P", "pendente"),
-    EM_ANDAMENTO("E", "em_andamento"),
-    CANCELADO("C", "cancelado"),
-    FINALIZADO("F", "finalizado");
+    PENDENTE(1),
+    EM_ANDAMENTO(2),
+    CANCELADO(3),
+    FINALIZADO(4);
 
-    private String status;
-    private String description;
+    @Getter
+    private int code;
 
-    TarefaStatusEnum(String status, String description) {
-        this.status = status;
+    private TarefaStatusEnum(int code){
+        this.code = code;
     }
 
-    public String getStatus() {
-        return this.status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public static TarefaStatusEnum toEnum(String status){
-        for(TarefaStatusEnum tar : TarefaStatusEnum.values()){
-            if (status.equals(tar.getStatus())){
-                return tar;
+    public static TarefaStatusEnum valueOf(int code) {
+        for (TarefaStatusEnum value : TarefaStatusEnum.values()) {
+            if (code == value.getCode()){
+                return value;
             }
         }
-        throw new IllegalArgumentException("status inválido");
+        throw new IllegalArgumentException("staus do enum inválido");
     }
-
 }

@@ -1,5 +1,6 @@
 package com.github.maikoncarlos.tarefas.entities;
 
+import com.github.maikoncarlos.tarefas.enuns.TarefaStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,15 +25,20 @@ public class Tarefa implements Serializable {
     @NotNull(message = "campo não pode ser nulo")
     private String descricao;
 
-    @NotNull
-    private String tarefaStatus;
+    @NotNull(message = "campo não pode ser nulo")
+    private Integer tarefaStatus;
 
+    public Tarefa(TarefaStatusEnum tarefaStatus) {
+        setTarefaStatus(tarefaStatus);
+    }
 
-//    public String getTarefaStatus() {
-//        return TarefaStatusEnum.toEnum(this.tarefaStatus).getDescription();
-//    }
-//
-//    public void setTarefaStatus(String tarefaStatus) {
-//        this.tarefaStatus = tarefaStatus;
-//    }
+    public TarefaStatusEnum getTarefaStatus() {
+        return TarefaStatusEnum.valueOf(tarefaStatus);
+    }
+
+    public void setTarefaStatus(TarefaStatusEnum tarefaStatus) {
+        if (tarefaStatus != null){
+            this.tarefaStatus = tarefaStatus.getCode();
+        }
+    }
 }
