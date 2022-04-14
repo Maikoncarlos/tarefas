@@ -2,23 +2,26 @@ package com.github.maikoncarlos.tarefas.service;
 
 import com.github.maikoncarlos.tarefas.controllers.dto.TarefaDTO;
 import com.github.maikoncarlos.tarefas.entities.Tarefa;
+import com.github.maikoncarlos.tarefas.exception.NaoTemTarefaException;
 import com.github.maikoncarlos.tarefas.repositories.TarefaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class TarefaService {
+
+//    private static final Logger log = LoggerFactory.getLogger(TarefaService.class);
 
     @Autowired
     private TarefaRepository tarefaRepository;
@@ -26,61 +29,64 @@ public class TarefaService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public String createTask(TarefaDTO tarefaDTO) {
-        return this.createTask(tarefaDTO, modelMapper);
+
+    public ResponseEntity<TarefaDTO> createTask(TarefaDTO tarefaDTO) {
+        return new ResponseEntity<>(toTarefaDTO(
+                tarefaRepository.save(toTarefa(tarefaDTO))), HttpStatus.CREATED);
     }
 
-    private String createTask(TarefaDTO tarefaDTO, ModelMapper modelMapper) {
-        try {
-            Tarefa tarefa = tarefaRepository.save(tarefaDTOtoTarefa(tarefaDTO, modelMapper));
-            return tarefa.getId() > 0 ? "Salvo com Sucesso!" : "";
-        } catch (Exception e) {
-            return e.getMessage();
+    public ResponseEntity<List<TarefaDTO>> getAllTasks() {
+        List<Tarefa> tarefaList = tarefaRepository.findAll();
+        if (!tarefaList.isEmpty()) {
+            return new ResponseEntity<List<TarefaDTO>>(
+                    tarefaList.stream()
+                            .map(this::toTarefaDTO)
+                            .collect(Collectors.toList()), HttpStatus.OK);
+        } else {
+            log.info("BUSCA POR TODAS TAREFAS, ERROR NÃO EXISTE TAREFAS GRAVADAS");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Não tem nenhuma tarefa em BD");
+
         }
     }
 
-    public List<TarefaDTO> getAllTasks() {
-        return tarefaRepository.findAll()
-                .stream()
-                .map(this::toTarefaDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<TarefaDTO> getTasksToId(long id){
+        Tarefa tarefa = tarefaRepository.findById(id).get();
+        if (tarefa != null) {
+            return new ResponseEntity<>(toTarefaDTO(tarefa), HttpStatus.OK);
+        } else {
+            log.info("BUSCA POR TAREFA PELO ID, ERROR NO ID: {}", id);
+            throw new NaoTemTarefaException("Não tem nenhuma tarefa em BD");
+        }
     }
 
-    private Tarefa tarefaDTOtoTarefa(TarefaDTO tarefaDTO, ModelMapper modelMapper) {
-        return modelMapper.map(tarefaDTO, Tarefa.class);
+    public ResponseEntity<TarefaDTO> updateTask(TarefaDTO tarefaDTO, long id) {
+        Tarefa tarefa = tarefaRepository.findById(id).get();
+        if (tarefa != null) {
+            return new ResponseEntity<>(toTarefaDTO(
+                    tarefaRepository.save(toTarefa(tarefaDTO))), HttpStatus.OK);
+        } else {
+            log.info("ATUALIZAR TAREFA PELO ID, ERROR NO ID: {}", tarefa.getId());
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    public ResponseEntity<String> deleteTask(long id) {
+        Tarefa tarefa = tarefaRepository.findById(id).get();
+        if (tarefa != null) {
+            tarefaRepository.delete(tarefa);
+            return new ResponseEntity<>("deletado com sucesso", HttpStatus.OK);
+        } else {
+            log.info("DELETAR TAREFA PELO ID, ERROR NO ID: {}", id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }
     }
 
     private TarefaDTO toTarefaDTO(Tarefa tarefa) {
         return modelMapper.map(tarefa, TarefaDTO.class);
     }
 
-    public TarefaDTO getTasksToId(long id) {
-        Tarefa tarefa = tarefaRepository.findById(id)
-                .orElseThrow(NullPointerException::new);
-
-        return toTarefaDTO(tarefa);
-    }
-
-    public ResponseEntity<TarefaDTO> updateTask(Tarefa tarefa, long id) {
-        Optional<Tarefa> tarefaOptional = tarefaRepository.findById(id);
-        if(!tarefaOptional.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-          tarefa.setId(tarefaOptional.get().getId());
-          tarefaRepository.save(tarefa);
-          return new ResponseEntity<TarefaDTO>(toTarefaDTO(tarefa), HttpStatus.OK);
-    }
-
-    public ResponseEntity<?> deleteTask(long id) {
-        Optional<Tarefa> tarefaOptional = tarefaRepository.findById(id);
-        if(!tarefaOptional.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        tarefaRepository.delete(tarefaOptional.get());
-        return new ResponseEntity<>(HttpStatus.OK);
+    private Tarefa toTarefa(TarefaDTO tarefaDTO) {
+        return modelMapper.map(tarefaDTO, Tarefa.class);
     }
 }
-
-
-
-
