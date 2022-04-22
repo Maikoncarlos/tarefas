@@ -1,15 +1,14 @@
 package com.github.maikoncarlos.tarefas.exception;
 
-public class NaoTemTarefaException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    private static final long serialVersionUID = 4928599035264976611L;
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NaoTemTarefaException extends RuntimeException {
 
-    public NaoTemTarefaException(String mensagem) {
-        super(mensagem);
+    private static final long serialVersionUID = 1L;
+
+    public NaoTemTarefaException(String exception) {
+        super(exception);
     }
-
-    public NaoTemTarefaException(Throwable t) {
-        super(t);
-    }
-
 }
