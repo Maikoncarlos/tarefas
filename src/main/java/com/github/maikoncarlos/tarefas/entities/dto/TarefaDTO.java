@@ -1,4 +1,4 @@
-package com.github.maikoncarlos.tarefas.controllers.dto;
+package com.github.maikoncarlos.tarefas.entities.dto;
 
 import lombok.Getter;
 import lombok.Setter;
