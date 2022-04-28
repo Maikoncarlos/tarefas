@@ -10,12 +10,14 @@ A aplicação consiste em uma organização de tarefas, onde são criadas tarefa
 # Tecnologias utilizadas
 ## Back end
 - Java
-- Spring Boot
-- JPA / Hibernate
+- Spring Boot / Data JPA
+- Hibernate
+- BD H2
 - Lombok
+- Validation
 - Modelmapper
 - Maven
-- Documentação OPENAPI
+- Documentação OPENAPI/SWAGGER
 
 ## Implantação em produção
 - Back end: Heroku
