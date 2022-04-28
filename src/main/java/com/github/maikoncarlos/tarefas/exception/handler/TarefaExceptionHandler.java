@@ -52,8 +52,8 @@ public class TarefaExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<ValidErrors> handlerException(MethodArgumentNotValidException manvException, HttpServletRequest request) {
         List<FieldError> fieldErrors = manvException.getBindingResult().getFieldErrors();
-       String field = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining());
-        String fieldMessage =  fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining());
+       String field = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining("  /  "));
+        String fieldMessage =  fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining("  /  "));
 
         ValidErrors error = new ValidErrors();
         error.setTimestamp(Instant.now());

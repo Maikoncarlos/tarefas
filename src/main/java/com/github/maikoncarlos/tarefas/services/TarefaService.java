@@ -66,9 +66,9 @@ public class TarefaService {
     }
 
     private void validarBuscaPorId(long id) {
-        log.error("ERROR - BUSCAR TAREFA POR ID, NÃO TEM TAREFA GRAVADA COM ID: " + id);
+        log.error("ERROR - BUSCAR TAREFA POR ID, NÃO TEM TAREFA GRAVADA COM ID:  " + id);
         Tarefa tarefa = tarefaRepository.findById(id)
-                .orElseThrow(() -> new NotFoundTaskException("Não tem tarefa com este ID" + id));
+                .orElseThrow(() -> new NotFoundTaskException("Não tem tarefa com este ID: " + id));
     }
 
     private TarefaDTO toTarefaDTO(Tarefa tarefa) {
