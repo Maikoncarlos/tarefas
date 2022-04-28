@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TarefaMapper {
-    TarefaDTO toTarefaDTO(Tarefa tarefa);
+	TarefaDTO toTarefaDTO(Tarefa tarefa);
 
-    Tarefa toTarefa(TarefaDTO tarefaDTO);
+	Tarefa toTarefa(TarefaDTO tarefaDTO);
 }
