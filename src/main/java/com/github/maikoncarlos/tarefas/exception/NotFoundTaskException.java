@@ -4,11 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class NaoTemTarefaException extends RuntimeException {
-
+public class NotFoundTaskException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public NaoTemTarefaException(String exception) {
-        super(exception);
+    public NotFoundTaskException(String message) {
+        super(message);
     }
 }
