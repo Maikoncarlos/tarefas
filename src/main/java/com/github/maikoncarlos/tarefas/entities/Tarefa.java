@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 
@@ -22,23 +23,22 @@ public class Tarefa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "campo não pode ser nulo")
-    private String descricao;
 
-    @NotNull(message = "campo não pode ser nulo")
-    private Integer tarefaStatus;
+    private String description;
 
-    public Tarefa(TarefaStatusEnum tarefaStatus) {
-        setTarefaStatus(tarefaStatus);
+    private Integer taskStatus;
+
+    public Tarefa(TarefaStatusEnum taskStatus) {
+        setTaskStatus(taskStatus);
     }
 
-    public TarefaStatusEnum getTarefaStatus() {
-        return TarefaStatusEnum.valueOf(tarefaStatus);
+    public TarefaStatusEnum getTaskStatus() {
+        return TarefaStatusEnum.valueOf(taskStatus);
     }
 
-    public void setTarefaStatus(TarefaStatusEnum tarefaStatus) {
-        if (tarefaStatus != null){
-            this.tarefaStatus = tarefaStatus.getCode();
+    public void setTaskStatus(TarefaStatusEnum taskStatus) {
+        if (taskStatus != null) {
+            this.taskStatus = taskStatus.getCode();
         }
     }
 }

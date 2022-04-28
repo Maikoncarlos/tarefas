@@ -1,12 +1,14 @@
 package com.github.maikoncarlos.tarefas.controllers;
 
-import com.github.maikoncarlos.tarefas.controllers.dto.TarefaDTO;
-import com.github.maikoncarlos.tarefas.service.TarefaService;
+import com.github.maikoncarlos.tarefas.entities.dto.TarefaDTO;
+import com.github.maikoncarlos.tarefas.services.TarefaService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,37 +23,39 @@ public class TarefaController {
 
     @Operation(summary = "Cria uma Tarefa Nova")
     @PostMapping("/task")
-    public ResponseEntity<TarefaDTO> createTask(@RequestBody @Valid TarefaDTO tarefaDTO) {
+    public ResponseEntity<TarefaDTO> createTask(@Valid @RequestBody TarefaDTO tarefaDTO) {
         log.info("INICIANDO PROCESSO DE GRAVAÇÃO DE TAREFAS");
-        return tarefaService.createTask(tarefaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tarefaService.createTask(tarefaDTO));
     }
 
     @Operation(summary = "Retorna uma Lista de Todas as Tarefas")
     @GetMapping("/task")
     public ResponseEntity<List<TarefaDTO>> getAllTasks() {
         log.info("INICIANDO PROCESSO DE BUSCAR TODAS TAREFAS");
-        return tarefaService.getAllTasks();
+        return ResponseEntity.ok().body(tarefaService.getAllTasks());
     }
 
-    @Operation(summary = "Retorna Somente uma Tarefa buscando pelo numero do ID")
+    @Operation(summary = "Retorna Somente uma Tarefa")
     @GetMapping("/task/{id}")
     public ResponseEntity<TarefaDTO> getTasksToId(@PathVariable(value = "id") long id) {
         log.info("INICIANDO PROCESSO DE BUSCA POR UMA TAREFA");
-        return tarefaService.getTasksToId(id);
+        return ResponseEntity.ok().body(tarefaService.getTasksToId(id));
     }
 
     @Operation(summary = "Atualiza uma Tarefa")
     @PutMapping("/task/{id}")
-    public ResponseEntity<TarefaDTO> updateTask(@PathVariable(value = "id") long id, @RequestBody @Valid TarefaDTO tarefaDTO) {
+    public ResponseEntity<TarefaDTO> updateTask(@PathVariable(value = "id") long id, @Valid @RequestBody TarefaDTO tarefaDTO) {
         log.info("INICIANDO PROCESSO DE ATUALIZAÇÃO DA TAREFA");
-        return tarefaService.updateTask(tarefaDTO, id);
+        return ResponseEntity.ok().body(tarefaService.updateTask(tarefaDTO, id));
     }
 
-    @Operation(summary = "Deleta uma Tarefa")
+    @Operation(summary = "Deleta uma Tarefa por vez")
     @DeleteMapping("/task/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable(value = "id") long id) {
-        log.info("INICIANDO PROCESSO DE DELETAR DE TAREFA POR ID {}", id);
-        return tarefaService.deleteTask(id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTask(@PathVariable(value = "id") long id) {
+        log.info("INICIANDO PROCESSO DE DELETAR A TAREFA POR ID {}", id);
+        tarefaService.deleteTask(id);
+
     }
 
 }
