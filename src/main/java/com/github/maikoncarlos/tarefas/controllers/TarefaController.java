@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -37,14 +38,14 @@ public class TarefaController {
 
     @Operation(summary = "Retorna Somente uma TarefaEntity")
     @GetMapping("/task/{id}")
-    public ResponseEntity<TarefaDTO> getTasksToId(@PathVariable(value = "id") long id) {
+    public ResponseEntity<TarefaDTO> getTasksToId(@PathVariable(value = "id") UUID id) {
         log.info("INICIANDO PROCESSO DE BUSCA POR UMA TAREFA");
         return ResponseEntity.ok().body(tarefaServiceImpl.getTasksToId(id));
     }
 
     @Operation(summary = "Atualiza uma TarefaEntity")
     @PutMapping("/task/{id}")
-    public ResponseEntity<TarefaDTO> updateTask(@PathVariable(value = "id") long id, @Valid @RequestBody TarefaDTO tarefaDTO) {
+    public ResponseEntity<TarefaDTO> updateTask(@PathVariable(value = "id") UUID id, @Valid @RequestBody TarefaDTO tarefaDTO) {
         log.info("INICIANDO PROCESSO DE ATUALIZAÇÃO DA TAREFA");
         return ResponseEntity.ok().body(tarefaServiceImpl.updateTask(tarefaDTO, id));
     }
@@ -52,7 +53,7 @@ public class TarefaController {
     @Operation(summary = "Deleta uma TarefaEntity por vez")
     @DeleteMapping("/task/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTask(@PathVariable(value = "id") long id) {
+    public void deleteTask(@PathVariable(value = "id") UUID id) {
         log.info("INICIANDO PROCESSO DE DELETAR A TAREFA POR ID {}", id);
         tarefaServiceImpl.deleteTask(id);
 

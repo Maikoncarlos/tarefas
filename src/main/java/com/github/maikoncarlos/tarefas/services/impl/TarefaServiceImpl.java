@@ -1,6 +1,7 @@
 package com.github.maikoncarlos.tarefas.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.github.maikoncarlos.tarefas.entities.TarefaEntity;
@@ -44,14 +45,14 @@ public class TarefaServiceImpl implements TarefaService {
         }
     }
 
-    public TarefaDTO getTasksToId(long id) {
+    public TarefaDTO getTasksToId(UUID id) {
         validarBuscaPorId(id);
         TarefaEntity tarefaEntity = tarefaRepository.findById(id).get();
         log.info("SUCESSO - BUSCAR TAREFA POR ID, TAREFA GRAVADA, ID: " + id);
         return tarefaMapper.toTarefaDTO(tarefaEntity);
     }
 
-    public TarefaDTO updateTask(TarefaDTO tarefaDTO, long id) {
+    public TarefaDTO updateTask(TarefaDTO tarefaDTO, UUID id) {
         validarBuscaPorId(id);
         TarefaEntity task = tarefaMapper.toTarefa(tarefaDTO);
         task.setId(id);
@@ -60,14 +61,14 @@ public class TarefaServiceImpl implements TarefaService {
         return tarefaDTO;
     }
 
-    public void deleteTask(long id) {
+    public void deleteTask(UUID id) {
         validarBuscaPorId(id);
         TarefaEntity tarefaEntity = tarefaRepository.findById(id).get();
         log.info("SUCESSO - DELETADO TAREFA ID: {}", id);
         tarefaRepository.delete(tarefaEntity);
     }
 
-    private void validarBuscaPorId(long id) {
+    private void validarBuscaPorId(UUID id) {
         log.error("ERROR - BUSCAR TAREFA POR ID, NÃO TEM TAREFA GRAVADA COM ID:  " + id);
         TarefaEntity tarefaEntity = tarefaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundTaskException("Não tem tarefaEntity com este ID: " + id));

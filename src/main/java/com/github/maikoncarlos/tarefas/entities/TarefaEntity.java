@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 
 @Table(name = "TB_TAREFAS")
@@ -18,11 +19,13 @@ public class TarefaEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-
+    @Column(name = "descricao_tarefa", nullable = false)
     private String description;
+
+    @Column(name = "titulo_tarefa", nullable = false)
     private Integer taskStatus;
 
     public TarefaEntity(TarefaStatusEnum taskStatus) {
