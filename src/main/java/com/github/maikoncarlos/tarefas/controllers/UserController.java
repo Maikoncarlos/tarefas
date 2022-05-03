@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         log.info("INICIANDO PROCESSO DE BUSCAR DOS USUARIOS");
-        return ResponseEntity.ok().body(userService.getAllUsers());
+        return ResponseEntity.ok().body(userService.getAllUser());
     }
 
     @Operation(summary = "Retorna Somente um Usuário")
