@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import com.github.maikoncarlos.tarefas.entities.UserEntity;
-import com.github.maikoncarlos.tarefas.entities.dto.UserDto;
+import com.github.maikoncarlos.tarefas.entities.dto.UserDTO;
 import com.github.maikoncarlos.tarefas.entities.mapper.UserMapper;
 import com.github.maikoncarlos.tarefas.repositories.UserRepository;
 import com.github.maikoncarlos.tarefas.services.UserService;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserEntity createNewUser(@Valid UserDto userDto, Map<String, String> headers) {
+	public UserEntity createNewUser(@Valid UserDTO userDto, Map<String, String> headers) {
 		
 		//TODO chamar alguma implementacao para autenticacao dessa acao
 		
@@ -38,6 +38,26 @@ public class UserServiceImpl implements UserService {
 
 		return userRepository.save(userMapper.dtoToEntity(userDto));
 		
+	}
+
+	@Override
+	public UserDTO getAllUsers() {
+		return null;
+	}
+
+	@Override
+	public UserDTO getUserToId(long id) {
+		return null;
+	}
+
+	@Override
+	public UserDTO updateTask(UserDTO userDTO, long id) {
+		return null;
+	}
+
+	@Override
+	public void deleteUser(long id) {
+
 	}
 
 
