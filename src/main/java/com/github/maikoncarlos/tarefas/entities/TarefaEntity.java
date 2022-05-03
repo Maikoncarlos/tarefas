@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Data
-public class Tarefa implements Serializable {
+public class TarefaEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,7 +25,7 @@ public class Tarefa implements Serializable {
     private String description;
     private Integer taskStatus;
 
-    public Tarefa(TarefaStatusEnum taskStatus) {
+    public TarefaEntity(TarefaStatusEnum taskStatus) {
         setTaskStatus(taskStatus);
     }
 
