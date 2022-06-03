@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 
 @Table(name = "TB_TAREFAS")
@@ -20,7 +19,7 @@ public class TarefaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @Column(name = "descricao_tarefa", nullable = false)
     private String description;

@@ -11,6 +11,7 @@ public class TarefaDTO {
 
     @NotBlank(message = "Description Value not null or is empty")
     private String description;
+
     @NotEmpty(message = "Status Value not null or is empty")
     private String taskStatus;
 

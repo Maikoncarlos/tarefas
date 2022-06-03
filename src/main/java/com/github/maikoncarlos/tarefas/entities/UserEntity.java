@@ -1,23 +1,28 @@
 package com.github.maikoncarlos.tarefas.entities;
 
-import java.util.UUID;
+import lombok.Data;
 
 import javax.persistence.*;
-
-import lombok.Data;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Table(name = "TB_USUARIOS")
 @Entity
 @Data
 public class UserEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
-	
-	@Column(name = "email", nullable = false)
-	private String email;
+    @Column(name = "nome", nullable = false)
+    private String name;
+
+    @NotEmpty(message = "digite o login")
+    @Column(name = "email", nullable = false)
+    @Email(message = "formato inválido")
+    private String login;
+
+    @Column(name = "senha", nullable = false)
+    private String password;
 }
