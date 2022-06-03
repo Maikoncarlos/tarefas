@@ -4,7 +4,6 @@ import com.github.maikoncarlos.tarefas.entities.dto.TarefaDTO;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 public interface TarefaService {
 
@@ -12,9 +11,9 @@ public interface TarefaService {
 
     List<TarefaDTO> getAllTasks();
 
-    TarefaDTO getTasksToId(UUID id);
+    TarefaDTO getTasksToId(Long id);
 
-    TarefaDTO updateTask(@Valid TarefaDTO tarefaDTO, UUID id);
+    TarefaDTO updateTask(@Valid TarefaDTO tarefaDTO, Long id);
 
-    void deleteTask(UUID id);
+    void deleteTask(Long id);
 }

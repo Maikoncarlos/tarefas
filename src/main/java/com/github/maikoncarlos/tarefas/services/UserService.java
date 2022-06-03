@@ -1,22 +1,21 @@
 package com.github.maikoncarlos.tarefas.services;
 
-import com.github.maikoncarlos.tarefas.entities.UserEntity;
 import com.github.maikoncarlos.tarefas.entities.dto.UserDTO;
+import com.github.maikoncarlos.tarefas.entities.dto.ValidDTO;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
 
-    UserEntity createNewUser(@Valid UserDTO userDto, Map<String, String> headers);
+    UserDTO createNewUser(UserDTO userDto);
 
-	List<UserDTO> getAllUser();
+    List<UserDTO> getAllUser();
 
-    UserDTO getUserToId(long id);
+    UserDTO getUserToId(Long id);
 
-    UserDTO updateTask(UserDTO userDTO, long id);
+    UserDTO updateTask(UserDTO userDTO, Long id);
 
-    void deleteUser(long id);
+    void deleteUser(Long id);
 
+    Boolean validUser(ValidDTO validDTO);
 }
