@@ -29,6 +29,8 @@ public class TarefaExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
+    String msg = "Not value is present";
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<StandardError> handleallException(Exception ex, HttpServletRequest request) {
         StandardError error = new StandardError();
@@ -52,13 +54,14 @@ public class TarefaExceptionHandler extends ResponseEntityExceptionHandler {
         ValidErrors error = new ValidErrors();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Not value is present");
+        error.setError(msg);
         error.setMessage(manvException.toString());
         error.setPath(request.getContextPath());
         error.setField(field);
         error.setFieldMessage(fieldMessage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
                                                              @Nullable Object body,
@@ -68,7 +71,7 @@ public class TarefaExceptionHandler extends ResponseEntityExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
-        error.setError("Not value is present");
+        error.setError(msg);
         error.setMessage(ex.getMessage());
         error.setPath(request.getDescription(true));
         return new ResponseEntity(error, headers, status);
@@ -79,11 +82,10 @@ public class TarefaExceptionHandler extends ResponseEntityExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Not value is present");
+        error.setError(msg);
         error.setMessage(ex.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
-
 
 }
