@@ -1,15 +1,14 @@
 package com.github.maikoncarlos.tarefas.repositories;
 
-import java.util.Optional;
-import java.util.UUID;
-
+import com.github.maikoncarlos.tarefas.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.github.maikoncarlos.tarefas.entities.UserEntity;
+import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, UUID>{
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-	Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByLogin(String login);
+
 }
