@@ -67,8 +67,9 @@ public class TarefaServiceImpl implements TarefaService {
     }
 
     private void validarBuscaPorId(Long id) {
+        log.info("VERIFICANDO SE EXISTE TAREFA CADASTRADA COM ID : {}", id);
        tarefaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundTaskException("Não tem tarefa cadastrada com o ID: " + id));
-    }
+       }
 
 }

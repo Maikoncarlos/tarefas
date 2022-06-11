@@ -78,7 +78,7 @@ public class TarefaExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundTaskException.class)
-    public final ResponseEntity<StandardError> handleNoContentException(Exception ex, HttpServletRequest request) {
+    public final ResponseEntity<StandardError> handleNotFoundException(Exception ex, HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
