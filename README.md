@@ -29,13 +29,10 @@ Pré-requisitos: Java 11
 
 ```bash
 # clonar repositório
-git clone https://github.com/Maikoncarlos/tarefas
-
-# entrar na pasta do projeto back end
-cd backend
+$ git clone https://github.com/Maikoncarlos/tarefas
 
 # executar o projeto
-./mvnw spring-boot:run
+$ mvn spring-boot:run
 ```
 
 # Autor
